@@ -5,7 +5,7 @@
       <div class="column" v-for="result in results">
         <article class="message">
           <div class="message-header">
-            <p>{{ result.title }}</p>
+            <p>{{ result.division_name }}</p>
           </div>
           <div class="message-body">
             <p>{{ result.abstract }}</p>
@@ -23,20 +23,13 @@
 
     data () {
       return {
-        results: [
-          {title: 'the very first post', abstract: 'lorem ipsum some test dimpsum'},
-          {title: 'and then there was the second', abstract: 'lorem ipsum some test dimsum'},
-          {title: "third time's a charm", abstract: 'lorem ipsum some test dimsum'},
-          {title: 'four the last time', abstract: 'lorem ipsum some test dimsum'}
-        ]
+        results: []
       }
     },
-
     mounted () {
-      axios.get('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=your_api_key')
-        .then(response => {
-          this.results = response.data.results
-        })
+      this.axios.get('divisions').then(response => {
+        this.results = response.data
+      })
     }
   }
 </script>

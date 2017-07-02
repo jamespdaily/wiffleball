@@ -3,8 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+// Import Vue components
 
 import Roster from './components/Roster'
+import Navigation from './components/Navigation'
+import Tab from './components/Tab'
+
+// Initiate Axios settings to query the REST API
+Vue.use(VueAxios, axios)
+Vue.axios.defaults.baseURL = 'http://localhost:8000/api'
 
 Vue.config.productionTip = false
 
@@ -13,14 +23,5 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App, Roster },
-
-  data: {
-    results: [
-      {title: 'the very first post', abstract: 'lorem ipsum some test dimpsum'},
-      {title: 'and then there was the second', abstract: 'lorem ipsum some test dimsum'},
-      {title: "third time's a charm", abstract: 'lorem ipsum some test dimsum'},
-      {title: 'four the last time', abstract: 'lorem ipsum some test dimsum'}
-    ]
-  }
+  components: { App, Roster, Navigation, Tab }
 })
