@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import auth from './auth'
 
 // Import Vue components
 
@@ -14,9 +15,21 @@ import Tabular from './components/Tabular'
 
 // Initiate Axios settings to query the REST API
 Vue.use(VueAxios, axios)
-Vue.axios.defaults.baseURL = 'http://localhost:8000/api'
+Vue.axios.defaults.baseURL = 'http://localhost:3000/api'
 
 Vue.config.productionTip = false
+
+axios.interceptors.response.use((response) => {
+  return response
+}, function (error) {
+  // Do something with response error
+  if (error.response.status === 401) {
+    console.log('unauthorized, logging out ...')
+    auth.logout()
+    router.replace('/login')
+  }
+  return Promise.reject(error)
+})
 
 /* eslint-disable no-new */
 new Vue({

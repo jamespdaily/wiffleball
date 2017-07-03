@@ -1,7 +1,7 @@
 <template>
   <nav class="nav has-shadow">
     <div class="container">
-      <div class="nav-center">
+      <div class="nav-left">
         <a class="nav-item"><b>Dab</b></a>
         <router-link v-for="tab in navigationTabs" :to="{name: tab.path}">
           <a :href="tab.href"
