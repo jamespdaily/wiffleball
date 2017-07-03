@@ -15,7 +15,7 @@ export default new Router({
     },
     {
       path: '/roster',
-      name: 'Wiffleball Roster',
+      name: 'Roster',
       component: Roster
     }
   ]

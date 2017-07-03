@@ -10,7 +10,7 @@ import VueAxios from 'vue-axios'
 
 import Roster from './components/Roster'
 import Navigation from './components/Navigation'
-import Tab from './components/Tab'
+import Tabular from './components/Tabular'
 
 // Initiate Axios settings to query the REST API
 Vue.use(VueAxios, axios)
@@ -23,5 +23,5 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App, Roster, Navigation, Tab }
+  components: {App, Roster, Navigation, Tabular}
 })
