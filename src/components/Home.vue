@@ -1,13 +1,13 @@
 <template>
-  <section class="section">
-  <h1>Home Page</h1>
-  </section>
+  <div class="container">
+    <h1>Home Page</h1>
+  </div>
 </template>
 
 <script>
-export default {
-  name: 'home'
-}
+  export default {
+    name: 'home'
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

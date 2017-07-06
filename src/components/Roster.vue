@@ -1,6 +1,5 @@
 <template>
-  <section class="section">
-    <div class="container">
+  <div class="container">
     <div class="columns">
       <div class="column" v-for="result in results">
         <article class="message">
@@ -13,8 +12,7 @@
         </article>
       </div>
     </div>
-    </div>
-  </section>
+  </div>
 </template>
 
 <script>
