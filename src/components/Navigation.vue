@@ -1,17 +1,14 @@
 <template>
-  <nav class="nav has-shadow">
-    <div class="container">
-      <div class="nav-left">
-        <a class="nav-item"><b>Dab</b></a>
-        <router-link v-for="tab in navigationTabs" :to="{name: tab.path}">
-          <a :href="tab.href"
-             class="nav-item is-tab is-hidden-mobile"
-             :class="{ 'is-active': tab.isActive }"
-             @click="selectTab(tab)">
-            {{ tab.name }}
-          </a>
+  <nav class="tabs is-boxed">
+    <ul>
+      <li :class="{ 'is-active': tab.isActive }" v-for="tab in navigationTabs">
+        <router-link :to="{name: tab.path}" @click.native="selectTab(tab)">
+          {{ tab.name }}
         </router-link>
-      </div>
+      </li>
+    </ul>
+    <div class="tabs-component-panels">
+      <slot></slot>
     </div>
   </nav>
 </template>
@@ -21,12 +18,7 @@
     name: 'navigation',
     data () {
       return {
-        navigationTabs: [
-          {name: 'Home', path: 'Home', isActive: true},
-          {name: 'Rosters', path: 'Roster', isActive: false},
-          {name: 'Scores', path: 'Scores', isActive: false},
-          {name: 'Shit Talking', path: 'Smack', isActive: false}
-        ]
+        navigationTabs: []
       }
     },
     methods: {
@@ -35,6 +27,9 @@
           tab.isActive = (tab.name === selectedTab.name)
         })
       }
+    },
+    created () {
+      this.navigationTabs = this.$children
     }
   }
 </script>

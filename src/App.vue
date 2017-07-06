@@ -1,22 +1,23 @@
 <template>
   <div id="app">
+    <login></login>
     <section class="hero is-primary">
       <div class="hero-head">
         <header class="nav">
           <div class="container">
             <div class="nav-right">
-              <a v-if="isLoggedIn()" class="nav-item">
-                <a class="button" @click="logout()">Logout</a>
+              <a class="nav-item">
+                <a v-if="isLoggedIn()" class="button" @click="handleLogout">Logout</a>
               </a>
-              <a v-if="!isLoggedIn()" class="nav-item">
-                <a class="button" @click="login()">Login</a>
+              <a class="nav-item">
+                <a v-if="!isLoggedIn()" class="button" @click="openModal">Login</a>
               </a>
             </div>
           </div>
         </header>
       </div>
       <div class="hero-body">
-        <div class="container has-text-centered">
+        <div class="container">
           <h1 class="title">
             Wiffleball
           </h1>
@@ -26,7 +27,9 @@
         </div>
       </div>
       <div class="hero-foot">
-        <navigation></navigation>
+        <navigation>
+          <tab name="Home" path="Home" selected="true">sdfsdf</tab>
+        </navigation>
       </div>
     </section>
     <router-view></router-view>
@@ -35,21 +38,23 @@
 
 <script>
   import Navigation from './components/Navigation'
-  import auth from './auth'
+  import {isLoggedIn, logout} from './auth'
+  import eventBus from './EventBus'
+  import Login from './components/Login'
+  import Tab from './components/Tab'
 
   export default {
-    components: {Navigation},
+    components: {Navigation, Login, Tab},
     name: 'app',
     methods: {
-      logout () {
-        auth.logout()
-        this.$router.go('/')
-      },
-      login () {
-        this.$router.go('/login')
+      handleLogout () {
+        logout()
       },
       isLoggedIn () {
-        return auth.checkAuth()
+        return isLoggedIn()
+      },
+      openModal () {
+        eventBus.$emit('showModal')
       }
     }
   }

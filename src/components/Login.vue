@@ -1,37 +1,63 @@
 <template>
-  <div id="login">
-    <div class="columns">
-      <div class="column is-one-quarter">
-        <form @submit.prevent="login">
-          <p class="control">
-            <input class="input" v-model="email" placeholder="email">
-          </p>
-          <p class="control">
-            <input class="input" v-model="pass" placeholder="password" type="password">
-          </p>
-          <p>
-            <button class="button" type="submit">Login</button>
-          </p>
-        </form>
+  <div class="container">
+    <modal v-if="showModal" @close="showModal=false">
+      <template slot="header">Login</template>
+
+      <div class="field">
+        <p class="control has-icons-left">
+          <input class="input" type="email" placeholder="E-mail" v-model="email">
+          <span class="icon is-small is-left">
+      <i class="fa fa-envelope"></i>
+    </span>
+        </p>
       </div>
-    </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input class="input" type="password" placeholder="Password" v-model="pass">
+          <span class="icon is-small is-left">
+      <i class="fa fa-lock"></i>
+    </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control">
+        </p>
+      </div>
+
+      <template slot="footer">
+        <button class="button is-primary" @click="handleLogin">Login</button>
+        <button class="button is-danger" @click="showModal=false">Close</button>
+      </template>
+    </modal>
   </div>
 </template>
 
 <script>
-  import auth from '../auth'
+  import {login} from '../auth'
+  import Modal from './Modal'
+  import eventBus from '../EventBus'
+
   export default {
+    components: {Modal},
     name: 'login',
     data () {
       return {
         email: '',
-        pass: ''
+        pass: '',
+        showModal: false
       }
     },
     methods: {
-      login () {
-        auth.login(this.email, this.pass)
+      handleLogin () {
+        login()
       }
+    },
+
+    mounted () {
+      eventBus.$on('showModal', () => {
+        this.showModal = true
+        return this.showModal
+      })
     }
   }
 </script>
