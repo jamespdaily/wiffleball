@@ -1,17 +1,24 @@
 <template>
   <div class="container">
-    <div class="columns">
-      <div class="column" v-for="result in results">
-        <article class="message">
-          <div class="message-header">
-            <p>{{ result.division_name }}</p>
-          </div>
-          <div class="message-body">
-            <p>{{ result.abstract }}</p>
-          </div>
-        </article>
-      </div>
-    </div>
+    <table class="table is-striped">
+      <thead>
+      <tr>
+        <th v-for="column in columns">
+          <a href="#" @click="sortBy">{{ column }}</a>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="team in results">
+        <td>1</td>
+        <td>{{ team.team_name }}</td>
+        <td>50</td>
+        <td>25</td>
+        <td>25</td>
+        <td>50%</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -21,13 +28,21 @@
 
     data () {
       return {
-        results: []
+        columns: ['Rank', 'team_name', 'Played', 'Wins', 'Losses', 'Win %'],
+        results: [],
+        sortKey: 'team_name',
+        reverse: false
       }
     },
+
     mounted () {
-      this.axios.get('divisions').then(response => {
-        this.results = response.data
-      })
+      this.axios.get('Teams?filter[include]=players&filter[order]=' + this.sortKey)
+        .then(response => {
+          this.results = response.data
+        })
+    },
+
+    methods: {
     }
   }
 </script>
