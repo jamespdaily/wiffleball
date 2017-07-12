@@ -1,48 +1,104 @@
 <template>
   <div class="container">
-    <table class="table is-striped">
-      <thead>
-      <tr>
-        <th v-for="column in columns">
-          <a href="#" @click="sortBy">{{ column }}</a>
-        </th>
+    <div class="field">
+      <label class="label">Season</label>
+      <p class="control">
+    <span class="select">
+      <select v-model="selectedSeason" @change="updateData">
+        <option>All-time</option>
+        <option>2017</option>
+        <option>2016</option>
+      </select>
+    </span>
+      </p>
+    </div>
+
+    <tabular>
+      <template slot="tableHeader">
+        <tr>
+          <th v-for="header in columnHeaders">
+            <a @click="sortBy(header.key)">{{ header.name }}</a>
+          </th>
+        </tr>
+      </template>
+      <tr v-for="players in results">
+        <td>{{ players.full_name }}</td>
+        <td>{{ players.games_played }}</td>
+        <td>{{ (players.average * 1).toFixed(3) }}</td>
+        <td>{{ players.hits }}</td>
+        <td>{{ players.at_bats }}</td>
+        <td>{{ players.runs }}</td>
+        <td>{{ players.rbi }}</td>
+        <td>{{ players.doubles }}</td>
+        <td>{{ players.triples }}</td>
+        <td>{{ players.homeruns }}</td>
+        <td>{{ players.base_on_balls }}</td>
+        <td>{{ players.strikeouts }}</td>
       </tr>
-      </thead>
-      <tbody>
-      <tr v-for="team in results">
-        <td>1</td>
-        <td>{{ team.team_name }}</td>
-        <td>50</td>
-        <td>25</td>
-        <td>25</td>
-        <td>50%</td>
-      </tr>
-      </tbody>
-    </table>
+    </tabular>
   </div>
 </template>
 
 <script>
+  import Tabular from './Tabular'
+  import uniq from 'lodash/uniq'
+
   export default {
     name: 'roster',
 
+    components: {Tabular},
+
     data () {
       return {
-        columns: ['Rank', 'team_name', 'Played', 'Wins', 'Losses', 'Win %'],
         results: [],
-        sortKey: 'team_name',
-        reverse: false
+        columnHeaders: [
+          {name: 'Name', key: '1'},
+          {name: 'G', key: '2'},
+          {name: 'AVG', key: '3'},
+          {name: 'H', key: '4'},
+          {name: 'AB', key: '5'},
+          {name: 'R', key: '6'},
+          {name: 'RBI', key: '8'},
+          {name: '2B', key: '9'},
+          {name: '3B', key: '10'},
+          {name: 'HR', key: '11'},
+          {name: 'BB', key: '12'},
+          {name: 'SO', key: '13'}
+        ],
+        sortKey: 'full_name',
+        sortDirection: 'ASC',
+        selectedSeason: 'All-time'
       }
     },
-
+    computed: {
+      queryYear () {
+        return '?year=' + this.selectedSeason
+      },
+      querySort () {
+        return '&orderBy=' + this.sortKey + ' ' + this.sortDirection
+      },
+      seasons () {
+        return uniq(this.results.map(p => p.season_year))
+      }
+    },
+    methods: {
+      sortBy (header) {
+        this.sortKey = header
+        this.sortDirection = this.sortDirection === 'DESC' ? 'ASC' : 'DESC'
+        this.updateData()
+      },
+      updateData () {
+        this.axios.get('Player_Stats/getPlayerStats' + this.queryYear + this.querySort)
+          .then(response => {
+            this.results = response.data
+          })
+      }
+    },
     mounted () {
-      this.axios.get('Teams?filter[include]=players&filter[order]=' + this.sortKey)
+      this.axios.get('Player_Stats/getPlayerStats' + this.queryYear + this.querySort)
         .then(response => {
           this.results = response.data
         })
-    },
-
-    methods: {
     }
   }
 </script>

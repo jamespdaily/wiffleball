@@ -2,13 +2,10 @@
   <div id="app">
     <section class="hero is-primary">
       <div class="hero-body">
-        <div class="container">
+        <div class="container has-text-centered">
           <h1 class="title">
-            Wiffleball
+            <figure class="image is-128x128"><img src="./assets/wiffleball_logo.jpg"></figure>
           </h1>
-          <h2 class="subtitle">
-            API Testing
-          </h2>
         </div>
       </div>
 

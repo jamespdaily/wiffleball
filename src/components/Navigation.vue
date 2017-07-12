@@ -25,7 +25,7 @@
       return {
         navigationTabs: [
           {name: 'Home', path: 'Home', isActive: true},
-          {name: 'Rosters', path: 'Roster', isActive: false},
+          {name: 'Stats', path: 'Roster', isActive: false},
           {name: 'Scores', path: 'Scores', isActive: false},
           {name: 'Shit Talking', path: 'Smack', isActive: false}
         ]
