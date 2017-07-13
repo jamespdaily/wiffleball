@@ -6,8 +6,7 @@
     <span class="select">
       <select v-model="selectedSeason" @change="updateData">
         <option>All-time</option>
-        <option>2017</option>
-        <option>2016</option>
+        <option v-for="year in years">{{ year.year }}</option>
       </select>
     </span>
       </p>
@@ -51,19 +50,20 @@
     data () {
       return {
         results: [],
+        years: [],
         columnHeaders: [
           {name: 'Name', key: '1'},
           {name: 'G', key: '2'},
           {name: 'AVG', key: '3'},
-          {name: 'H', key: '4'},
-          {name: 'AB', key: '5'},
-          {name: 'R', key: '6'},
-          {name: 'RBI', key: '8'},
-          {name: '2B', key: '9'},
-          {name: '3B', key: '10'},
-          {name: 'HR', key: '11'},
+          {name: 'H', key: '6'},
+          {name: 'AB', key: '4'},
+          {name: 'R', key: '5'},
+          {name: 'RBI', key: '10'},
+          {name: '2B', key: '7'},
+          {name: '3B', key: '8'},
+          {name: 'HR', key: '9'},
           {name: 'BB', key: '12'},
-          {name: 'SO', key: '13'}
+          {name: 'SO', key: '11'}
         ],
         sortKey: 'full_name',
         sortDirection: 'ASC',
@@ -98,6 +98,11 @@
       this.axios.get('Player_Stats/getPlayerStats' + this.queryYear + this.querySort)
         .then(response => {
           this.results = response.data
+        })
+
+      this.axios.get('Player_Stats/getYears')
+        .then(response => {
+          this.years = response.data
         })
     }
   }
