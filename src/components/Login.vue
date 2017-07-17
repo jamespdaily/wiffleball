@@ -35,7 +35,6 @@
 <script>
   import {login} from '../auth'
   import Modal from './Modal'
-  import eventBus from '../EventBus'
 
   export default {
     components: {Modal},
@@ -51,13 +50,6 @@
       handleLogin () {
         login()
       }
-    },
-
-    mounted () {
-      eventBus.$on('showModal', () => {
-        this.showModal = true
-        return this.showModal
-      })
     }
   }
 </script>

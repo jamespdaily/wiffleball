@@ -16,7 +16,6 @@
 
 <script>
   import {isLoggedIn, logout, login} from '../auth'
-  import eventBus from '../EventBus'
 
   export default {
     name: 'navigation',
@@ -45,9 +44,6 @@
       },
       handleLogin () {
         login()
-      },
-      openModal () {
-        eventBus.$emit('showModal')
       }
     }
   }

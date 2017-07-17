@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <login></login>
     <div class="field">
       <label class="label">Season</label>
       <p class="control">
@@ -21,7 +22,7 @@
         </tr>
       </template>
       <tr v-for="players in results">
-        <td>{{ players.full_name }}</td>
+        <td><a @click="openPlayerModal(players.id)">{{ players.full_name }}</a></td>
         <td>{{ players.games_played }}</td>
         <td>{{ (players.average * 1).toFixed(3) }}</td>
         <td>{{ players.hits }}</td>
@@ -35,17 +36,20 @@
         <td>{{ players.strikeouts }}</td>
       </tr>
     </tabular>
+    <playerbio></playerbio>
   </div>
 </template>
 
 <script>
   import Tabular from './Tabular'
-  import uniq from 'lodash/uniq'
+  import eventBus from '../EventBus'
+  import Login from './Login'
+  import Playerbio from './PlayerBio.vue'
 
   export default {
     name: 'roster',
 
-    components: {Tabular},
+    components: { Playerbio, Tabular, Login },
 
     data () {
       return {
@@ -70,17 +74,16 @@
         selectedSeason: 'All-time'
       }
     },
+
     computed: {
       queryYear () {
         return '?year=' + this.selectedSeason
       },
       querySort () {
         return '&orderBy=' + this.sortKey + ' ' + this.sortDirection
-      },
-      seasons () {
-        return uniq(this.results.map(p => p.season_year))
       }
     },
+
     methods: {
       sortBy (header) {
         this.sortKey = header
@@ -92,6 +95,9 @@
           .then(response => {
             this.results = response.data
           })
+      },
+      openPlayerModal (playerId) {
+        eventBus.$emit('displayPlayerPopup', playerId)
       }
     },
     mounted () {

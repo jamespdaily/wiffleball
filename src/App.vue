@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container has-text-centered">
           <h1 class="title">
-            <figure class="image is-128x128"><img src="./assets/wiffleball_logo.jpg"></figure>
+            <figure class="image is-128x128"><img src="../static/wiffleball_logo.jpg"></figure>
           </h1>
         </div>
       </div>
