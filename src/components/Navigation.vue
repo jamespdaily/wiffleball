@@ -3,7 +3,7 @@
     <nav class="tabs is-boxed">
       <ul>
         <li :class="{ 'is-active': tab.isActive }" v-for="tab in navigationTabs">
-          <router-link :to="{name: tab.path}" @click.native="selectTab(tab)">
+          <router-link :to="{name: tab.path}" @click.native="selectTab(tab.name)">
             {{ tab.name }}
           </router-link>
         </li>
@@ -16,10 +16,13 @@
 
 <script>
   import {isLoggedIn, logout, login} from '../auth'
+  import eventBus from '../EventBus'
 
   export default {
     name: 'navigation',
+
     components: {isLoggedIn, logout, login},
+
     data () {
       return {
         navigationTabs: [
@@ -30,10 +33,11 @@
         ]
       }
     },
+
     methods: {
       selectTab (selectedTab) {
         this.navigationTabs.forEach(tab => {
-          tab.isActive = (tab.name === selectedTab.name)
+          tab.isActive = (tab.name === selectedTab)
         })
       },
       handleLogout () {
@@ -45,6 +49,12 @@
       handleLogin () {
         login()
       }
+    },
+
+    created () {
+      eventBus.$on('setActiveNavTab', (tabName) => {
+        this.selectTab(tabName)
+      })
     }
   }
 </script>

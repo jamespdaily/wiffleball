@@ -12,7 +12,7 @@
           <div class="content">
             <p><strong>Name: </strong>{{ selectedPlayer[0].full_name }}</p>
             <p><strong>Age: </strong></p>
-            <p><strong>Experience: </strong></p>
+            <p><strong>Experience: </strong>5 Seasons</p>
           </div>
         </div>
         </article>
@@ -54,7 +54,9 @@
 
   export default {
     name: 'playerbio',
+
     components: { Modal, Tabular },
+
     data () {
       return {
         playerStats: [],
@@ -80,7 +82,7 @@
 
     methods: {
       updatePlayerStats () {
-        this.axios.get('Player_Stats?filter[order]=season_year')
+        this.axios.get('Player_Stats?filter[order]=season_year DESC')
           .then(response => {
             this.playerStats = response.data
           })

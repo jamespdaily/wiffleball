@@ -90,30 +90,30 @@
         this.sortDirection = this.sortDirection === 'DESC' ? 'ASC' : 'DESC'
         this.updateData()
       },
+
       updateData () {
         this.axios.get('Player_Stats/getPlayerStats' + this.queryYear + this.querySort)
           .then(response => {
             this.results = response.data
           })
       },
+
       openPlayerModal (playerId) {
         eventBus.$emit('displayPlayerPopup', playerId)
       }
     },
-    mounted () {
-      this.axios.get('Player_Stats/getPlayerStats' + this.queryYear + this.querySort)
-        .then(response => {
-          this.results = response.data
-        })
+
+    created () {
+      this.updateData()
 
       this.axios.get('Player_Stats/getYears')
         .then(response => {
           this.years = response.data
         })
+    },
+
+    mounted () {
+      eventBus.$emit('setActiveNavTab', 'Stats')
     }
   }
 </script>
-
-<style scoped>
-
-</style>
