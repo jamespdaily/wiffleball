@@ -14,8 +14,8 @@ import Tab from './components/Tab'
 
 // Initiate Axios settings to query the REST API
 Vue.use(VueAxios, axios)
-// Vue.axios.defaults.baseURL = 'https://shielded-cliffs-33205.herokuapp.com/api'
-Vue.axios.defaults.baseURL = 'http://localhost:3000/api'
+Vue.axios.defaults.baseURL = 'https://shielded-cliffs-33205.herokuapp.com/api'
+// Vue.axios.defaults.baseURL = 'http://localhost:3000/api'
 
 Vue.config.productionTip = false
 
