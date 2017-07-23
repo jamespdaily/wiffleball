@@ -1,55 +1,55 @@
 <template>
-  <div class="container">
-    <modal v-if="showModal" @close="showModal=false">
-      <template slot="header">Login</template>
-
-      <div class="field">
-        <p class="control has-icons-left">
-          <input class="input" type="email" placeholder="E-mail" v-model="email">
-          <span class="icon is-small is-left">
-      <i class="fa fa-envelope"></i>
-    </span>
-        </p>
-      </div>
-      <div class="field">
-        <p class="control has-icons-left">
-          <input class="input" type="password" placeholder="Password" v-model="pass">
-          <span class="icon is-small is-left">
-      <i class="fa fa-lock"></i>
-    </span>
-        </p>
-      </div>
-      <div class="field">
-        <p class="control">
-        </p>
-      </div>
-
-      <template slot="footer">
-        <button class="button is-primary" @click="handleLogin">Login</button>
-        <button class="button is-danger" @click="showModal=false">Close</button>
-      </template>
-    </modal>
+  <div class="box">
+    <div id="firebaseui-auth-container"></div>
   </div>
 </template>
 
 <script>
-  import {login} from '../auth'
+  import firebase from 'firebase'
+  import { mapGetters } from 'vuex'
   import Modal from './Modal'
 
   export default {
-    components: {Modal},
     name: 'login',
+
+    components: { Modal },
+
     data () {
       return {
-        email: '',
-        pass: '',
-        showModal: false
+        showModal: false,
+        uiConfig: {
+          signInSuccessUrl: '/',
+          signInFlow: 'popup',
+          signInOptions: [
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            firebase.auth.FacebookAuthProvider.PROVIDER_ID
+          ]
+        }
       }
     },
+
+    computed: {
+      ...mapGetters({
+        firebaseUi: 'firebaseUi'
+      })
+    },
+
     methods: {
-      handleLogin () {
-        login()
+      showModal () {
+        this.showModal = true
       }
+    },
+
+    mounted () {
+      this.firebaseUi.start('#firebaseui-auth-container', this.uiConfig)
+    },
+
+    destroyed () {
+      this.firebaseUi.reset()
     }
   }
 </script>
+
+<style scoped>
+    @import url('../../node_modules/firebaseui/dist/firebaseui.css');
+</style>

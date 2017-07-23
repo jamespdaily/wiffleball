@@ -1,5 +1,8 @@
 <template>
   <div id="app">
+
+  <profile-bar></profile-bar>
+
     <section class="hero is-info is-bold">
       <div class="hero-body">
         <div class="container">
@@ -22,17 +25,17 @@
       </div>
     </section>
 
-    <section class="section">
       <router-view></router-view>
-    </section>
+
   </div>
 </template>
 
 <script>
   import Navigation from './components/Navigation'
+  import ProfileBar from './components/ProfileBar'
 
   export default {
-    components: {Navigation},
+    components: {Navigation, ProfileBar},
     name: 'app',
     methods: {}
   }

@@ -12,6 +12,10 @@
 <script>
 
   export default {
-    name: 'tabular'
+    name: 'tabular',
+
+    props: {
+      headers: []
+    }
   }
 </script>

@@ -1,4 +1,5 @@
 <template>
+  <section class="section">
   <div class="container">
     <article class="message">
       <div class="message-header">
@@ -17,6 +18,7 @@
       </div>
     </article>
   </div>
+  </section>
 </template>
 
 <script>
@@ -24,8 +26,3 @@
     name: 'home'
   }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>

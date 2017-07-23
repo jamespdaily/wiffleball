@@ -1,15 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 import Home from '@/components/Home'
 import Roster from '@/components/Roster'
 import Login from '@/components/Login'
-import Callback from '@/components/Callback'
+import Admin from '@/components/Admin'
 
-Vue.use(Router)
-
-// import auth from '../auth'
-
-export default new Router({
+const router = new VueRouter({
   mode: 'history',
   routes: [
     {
@@ -23,13 +18,21 @@ export default new Router({
       component: Roster
     },
     {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/callback',
-      component: Callback
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  // Check for auth
+  next()
+})
+
+export default router

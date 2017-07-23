@@ -1,27 +1,34 @@
 <template>
   <div class="container">
+
     <nav class="tabs is-boxed">
       <ul>
-        <li :class="{ 'is-active': tab.isActive }" v-for="tab in navigationTabs">
+        <li :class="{ 'is-active': tab.isActive }" v-for="tab in navigationTabs" v-if="isAuthorized(tab.name)">
           <router-link :to="{name: tab.path}" @click.native="selectTab(tab.name)">
             {{ tab.name }}
           </router-link>
         </li>
-        <li><a v-if="!isLoggedIn()" @click="handleLogin">Login</a></li>
-        <li><a v-if="isLoggedIn()" @click="handleLogout">Logout</a></li>
+        <li v-if="!user"><a @click="showLoginModal">Login</a></li>
       </ul>
     </nav>
+
+    <modal v-if="showModal" @close="showModal=false">
+      <login></login>
+    </modal>
+
   </div>
 </template>
 
 <script>
-  import {isLoggedIn, logout, login} from '../auth'
   import eventBus from '../EventBus'
+  import Login from './Login'
+  import { mapGetters } from 'vuex'
+  import Modal from './Modal'
 
   export default {
     name: 'navigation',
 
-    components: {isLoggedIn, logout, login},
+    components: {Login, Modal},
 
     data () {
       return {
@@ -29,8 +36,9 @@
           {name: 'Home', path: 'Home', isActive: true},
           {name: 'Stats', path: 'Roster', isActive: false},
           {name: 'Scores', path: 'Scores', isActive: false},
-          {name: 'Shit Talking', path: 'Smack', isActive: false}
-        ]
+          {name: 'Admin', path: 'Admin', isActive: false}
+        ],
+        showModal: false
       }
     },
 
@@ -40,15 +48,22 @@
           tab.isActive = (tab.name === selectedTab)
         })
       },
-      handleLogout () {
-        logout()
+      showLoginModal () {
+        this.showModal = true
       },
-      isLoggedIn () {
-        return isLoggedIn()
-      },
-      handleLogin () {
-        login()
+      isAuthorized (tabName) {
+        if (tabName === 'Admin') {
+          return this.user !== null
+        } else {
+          return true
+        }
       }
+    },
+
+    computed: {
+      ...mapGetters({
+        user: 'user'
+      })
     },
 
     created () {

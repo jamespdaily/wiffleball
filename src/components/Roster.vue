@@ -1,17 +1,13 @@
 <template>
+  <section class="section">
   <div class="container">
-    <login></login>
-    <div class="field">
-      <label class="label">Season</label>
-      <p class="control">
-    <span class="select">
-      <select v-model="selectedSeason" @change="updateData">
+
+    <dropdown label="Season">
+      <select v-model="selectedSeason">
         <option>All-time</option>
         <option v-for="year in years">{{ year.year }}</option>
       </select>
-    </span>
-      </p>
-    </div>
+    </dropdown>
 
     <tabular>
       <template slot="tableHeader">
@@ -21,7 +17,7 @@
           </th>
         </tr>
       </template>
-      <tr v-for="players in results">
+      <tr v-for="players in playerStats">
         <td><a @click="openPlayerModal(players.id)">{{ players.full_name }}</a></td>
         <td>{{ players.games_played }}</td>
         <td>{{ (players.average * 1).toFixed(3) }}</td>
@@ -36,8 +32,11 @@
         <td>{{ players.strikeouts }}</td>
       </tr>
     </tabular>
+
     <playerbio></playerbio>
+
   </div>
+  </section>
 </template>
 
 <script>
@@ -45,71 +44,58 @@
   import eventBus from '../EventBus'
   import Login from './Login'
   import Playerbio from './PlayerBio.vue'
+  import Dropdown from './Dropdown.vue'
+  import { mapGetters } from 'vuex'
+  import store from '../store/store'
+  import * as types from '../store/mutation-types'
 
   export default {
     name: 'roster',
 
-    components: { Playerbio, Tabular, Login },
+    components: { Dropdown, Playerbio, Tabular, Login },
 
     data () {
       return {
         results: [],
         years: [],
         columnHeaders: [
-          {name: 'Name', key: '1'},
-          {name: 'G', key: '2'},
-          {name: 'AVG', key: '3'},
-          {name: 'H', key: '6'},
-          {name: 'AB', key: '4'},
-          {name: 'R', key: '5'},
-          {name: 'RBI', key: '10'},
-          {name: '2B', key: '7'},
-          {name: '3B', key: '8'},
-          {name: 'HR', key: '9'},
-          {name: 'BB', key: '12'},
-          {name: 'SO', key: '11'}
+          {name: 'Name', key: 'full_name'},
+          {name: 'G', key: 'games_played'},
+          {name: 'AVG', key: 'average'},
+          {name: 'H', key: 'hits'},
+          {name: 'AB', key: 'at_bats'},
+          {name: 'R', key: 'runs'},
+          {name: 'RBI', key: 'rbi'},
+          {name: '2B', key: 'doubles'},
+          {name: '3B', key: 'triples'},
+          {name: 'HR', key: 'homeruns'},
+          {name: 'BB', key: 'base_on_balls'},
+          {name: 'SO', key: 'strikeouts'}
         ],
-        sortKey: 'full_name',
-        sortDirection: 'ASC',
         selectedSeason: 'All-time'
       }
     },
 
     computed: {
-      queryYear () {
-        return '?year=' + this.selectedSeason
-      },
-      querySort () {
-        return '&orderBy=' + this.sortKey + ' ' + this.sortDirection
-      }
+      ...mapGetters({
+        playerStats: 'playerStats',
+        sortColumn: 'sortColumn',
+        sortKey: 'sortKey'
+      })
     },
 
     methods: {
-      sortBy (header) {
-        this.sortKey = header
-        this.sortDirection = this.sortDirection === 'DESC' ? 'ASC' : 'DESC'
-        this.updateData()
-      },
-
-      updateData () {
-        this.axios.get('Player_Stats/getPlayerStats' + this.queryYear + this.querySort)
-          .then(response => {
-            this.results = response.data
-          })
+      sortBy (column) {
+        let sortKey
+        sortKey = this.sortKey === 'asc' ? 'desc' : 'asc'
+        store.commit(types.SET_SORT_COLUMN, column)
+        store.commit(types.SET_SORT_KEY, sortKey)
+        store.dispatch('sortStats')
       },
 
       openPlayerModal (playerId) {
         eventBus.$emit('displayPlayerPopup', playerId)
       }
-    },
-
-    created () {
-      this.updateData()
-
-      this.axios.get('Player_Stats/getYears')
-        .then(response => {
-          this.years = response.data
-        })
     },
 
     mounted () {
