@@ -5,7 +5,7 @@
     <dropdown label="Season">
       <select v-model="selectedSeason">
         <option>All-time</option>
-        <option v-for="year in years">{{ year.year }}</option>
+        <option v-for="year in year">{{ year }}</option>
       </select>
     </dropdown>
 
@@ -56,8 +56,6 @@
 
     data () {
       return {
-        results: [],
-        years: [],
         columnHeaders: [
           {name: 'Name', key: 'full_name'},
           {name: 'G', key: 'games_played'},
@@ -72,7 +70,8 @@
           {name: 'BB', key: 'base_on_balls'},
           {name: 'SO', key: 'strikeouts'}
         ],
-        selectedSeason: 'All-time'
+        selectedSeason: 'All-time',
+        year: 2017
       }
     },
 
@@ -90,7 +89,7 @@
         sortKey = this.sortKey === 'asc' ? 'desc' : 'asc'
         store.commit(types.SET_SORT_COLUMN, column)
         store.commit(types.SET_SORT_KEY, sortKey)
-        store.dispatch('sortStats')
+        store.commit(types.SORT_PLAYER_STATS)
       },
 
       openPlayerModal (playerId) {

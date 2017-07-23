@@ -9,8 +9,8 @@ import {firebaseAuth, firebaseUi} from './helpers/firebaseConfig'
 
 // Initiate Axios settings to query the REST API
 Vue.use(VueAxios, axios)
-// Vue.axios.defaults.baseURL = 'https://shielded-cliffs-33205.herokuapp.com/api'
-Vue.axios.defaults.baseURL = 'http://localhost:3000/api'
+Vue.axios.defaults.baseURL = 'https://shielded-cliffs-33205.herokuapp.com/api'
+// Vue.axios.defaults.baseURL = 'http://localhost:3000/api'
 // No idea what this is
 Vue.config.productionTip = false
 

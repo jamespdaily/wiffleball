@@ -7,6 +7,12 @@
         <li><a>Rosters</a></li>
       </ul>
     </div>
+
+    <nav class="navbar has-shadow">
+      <div class="navbar-end">
+        <a class="navbar-item is-tab is-active">Ah</a>
+      </div>
+    </nav>
   </div>
 </template>
 

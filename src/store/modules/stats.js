@@ -1,5 +1,5 @@
 import * as types from '../mutation-types'
-import _ from 'lodash'
+import { services } from '../api'
 
 const state = {
   playerStats: [],
@@ -12,7 +12,14 @@ const mutations = {
     state.playerStats = playerStats
   },
   [types.SORT_PLAYER_STATS] (state) {
-    state.playerStats = _.orderBy(state.playerStats, state.sortColumn, state.sortKey)
+    services.stats.sortAllStats(state.sortColumn, state.sortKey)
+      .then((response) => {
+        console.log(response)
+        state.playerStats = response.data
+      })
+      .catch((error) => {
+        console.error(error)
+      })
   },
   [types.SET_SORT_COLUMN] (state, sortColumn) {
     state.sortColumn = sortColumn
