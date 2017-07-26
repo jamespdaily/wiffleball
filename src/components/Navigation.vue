@@ -8,37 +8,30 @@
             {{ tab.name }}
           </router-link>
         </li>
-        <li v-if="!user"><a @click="showLoginModal">Login</a></li>
       </ul>
     </nav>
-
-    <modal v-if="showModal" @close="showModal=false">
-      <login></login>
-    </modal>
 
   </div>
 </template>
 
 <script>
   import eventBus from '../EventBus'
-  import Login from './Login'
-  import { mapGetters } from 'vuex'
   import Modal from './Modal'
+  import ProfileBarLoggedOut from './ProfileBarLoggedOut'
 
   export default {
     name: 'navigation',
 
-    components: {Login, Modal},
+    components: { Modal, ProfileBarLoggedOut },
 
     data () {
       return {
         navigationTabs: [
           {name: 'Home', path: 'Home', isActive: true},
-          {name: 'Stats', path: 'Roster', isActive: false},
+          {name: 'Stats', path: 'Stats', isActive: false},
           {name: 'Scores', path: 'Scores', isActive: false},
           {name: 'Admin', path: 'Admin', isActive: false}
-        ],
-        showModal: false
+        ]
       }
     },
 
@@ -48,9 +41,6 @@
           tab.isActive = (tab.name === selectedTab)
         })
       },
-      showLoginModal () {
-        this.showModal = true
-      },
       isAuthorized (tabName) {
         if (tabName === 'Admin') {
           return this.user !== null
@@ -58,12 +48,6 @@
           return true
         }
       }
-    },
-
-    computed: {
-      ...mapGetters({
-        user: 'user'
-      })
     },
 
     created () {

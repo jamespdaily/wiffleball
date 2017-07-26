@@ -1,9 +1,10 @@
 <template>
   <div id="app">
 
-  <profile-bar></profile-bar>
+  <profile-bar v-if="user"></profile-bar>
+  <profile-bar-logged-out v-if="!user"></profile-bar-logged-out>
 
-    <section class="hero is-info is-bold">
+    <section class="hero is-primary is-bold">
       <div class="hero-body">
         <div class="container">
         <nav class="level">
@@ -17,7 +18,7 @@
           </div>
         </nav>
       </div>
-      </div>
+    </div>
 
       <div class="hero-foot">
         <navigation>
@@ -25,19 +26,27 @@
       </div>
     </section>
 
-      <router-view></router-view>
+    <router-view></router-view>
 
   </div>
 </template>
 
 <script>
   import Navigation from './components/Navigation'
-  import ProfileBar from './components/ProfileBar'
+  import ProfileBar from './components/ProfileBarLoggedIn'
+  import ProfileBarLoggedOut from './components/ProfileBarLoggedOut'
+  import { mapGetters } from 'vuex'
 
   export default {
-    components: {Navigation, ProfileBar},
+    components: { ProfileBarLoggedOut, Navigation, ProfileBar },
+
     name: 'app',
-    methods: {}
+
+    computed: {
+      ...mapGetters({
+        user: 'user'
+      })
+    }
   }
 </script>
 
