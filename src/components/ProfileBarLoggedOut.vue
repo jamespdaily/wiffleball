@@ -1,10 +1,10 @@
 <template>
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-burger">
-        <span>Wait</span>
-        <span>1</span>
-        <span>Sec</span>
+      <div class="navbar-burger burger">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
       <div class="navbar-menu">
         <div class="navbar-end">
