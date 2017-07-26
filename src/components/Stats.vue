@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       <div class="columns">
-        <div class="column is-1 is-offset-11">
+        <div class="column is-1 is-offset-9">
           <b-dropdown v-model="selectedSeason">
             <button class="button is-primary" type="button" slot="trigger">
               <template>

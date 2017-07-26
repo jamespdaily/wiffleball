@@ -1,27 +1,32 @@
 <template>
   <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-burger">
+        <span>Wait</span>
+        <span>1</span>
+        <span>Sec</span>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-end">
+          <b-dropdown position="is-bottom-left" hoverable="true">
+            <a class="navbar-item" slot="trigger">
+              <span>Login</span>
+              <b-icon icon="arrow_drop_down"></b-icon>
+            </a>
 
-    <div class="navbar-menu">
-      <div class="navbar-end">
-        <b-dropdown position="is-bottom-left">
-          <a class="navbar-item" slot="trigger">
-            <span>Login</span>
-            <b-icon icon="arrow_drop_down"></b-icon>
-          </a>
-
-          <b-dropdown-option subheader paddingless>
-            <form action="">
-              <div class="modal-card" style="width:300px;">
-                <section class="modal-card-body">
-                  <div id="firebaseui-auth-container"></div>
-                </section>
-              </div>
-            </form>
-          </b-dropdown-option>
-        </b-dropdown>
+            <b-dropdown-option subheader paddingless>
+              <form action="">
+                <div class="modal-card" style="width:300px;">
+                  <section class="modal-card-body">
+                    <div id="firebaseui-auth-container"></div>
+                  </section>
+                </div>
+              </form>
+            </b-dropdown-option>
+          </b-dropdown>
+        </div>
       </div>
     </div>
-
   </nav>
 </template>
 
