@@ -16,13 +16,13 @@
 
 <script>
   import eventBus from '../EventBus'
-  import Modal from './Modal'
   import ProfileBarLoggedOut from './ProfileBarLoggedOut'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'navigation',
 
-    components: { Modal, ProfileBarLoggedOut },
+    components: { ProfileBarLoggedOut },
 
     data () {
       return {
@@ -33,6 +33,12 @@
           {name: 'Admin', path: 'Admin', isActive: false}
         ]
       }
+    },
+
+    computed: {
+      ...mapGetters({
+        user: 'user'
+      })
     },
 
     methods: {

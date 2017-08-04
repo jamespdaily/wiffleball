@@ -2,6 +2,7 @@
   <div class="container">
     <b-tabs v-model="activeTab">
       <b-tab-item label="Players">
+        <players-admin></players-admin>
       </b-tab-item>
 
       <b-tab-item label="Teams">
@@ -28,7 +29,10 @@
 </template>
 
 <script>
+  import PlayersAdmin from './AdminPlayers.vue'
+
   export default {
+    components: {PlayersAdmin},
     name: 'admin',
 
     data () {

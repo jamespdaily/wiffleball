@@ -2,9 +2,7 @@ import * as types from '../mutation-types'
 import { services } from '../api'
 
 const state = {
-  playerStats: [],
-  sortColumn: 'full_name',
-  sortKey: 'desc'
+  playerStats: []
 }
 
 const mutations = {
@@ -20,12 +18,6 @@ const mutations = {
       .catch((error) => {
         console.error(error)
       })
-  },
-  [types.SET_SORT_COLUMN] (state, sortColumn) {
-    state.sortColumn = sortColumn
-  },
-  [types.SET_SORT_KEY] (state, sortKey) {
-    state.sortKey = sortKey
   }
 }
 

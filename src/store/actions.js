@@ -1,7 +1,7 @@
 import * as types from './mutation-types'
 import { services } from './api'
 
-export const fetchStats = ({ commit }) => {
+export const LOAD_PLAYER_STATS = ({ commit }) => {
   return services.stats.getAllStats()
     .then((response) => {
       console.log(response)
@@ -10,8 +10,4 @@ export const fetchStats = ({ commit }) => {
     .catch((error) => {
       console.error(error)
     })
-}
-
-export const sortStats = ({ commit }) => {
-  commit(types.SORT_PLAYER_STATS, 'at_bats', 'desc')
 }
