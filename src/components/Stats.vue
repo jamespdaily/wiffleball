@@ -112,7 +112,7 @@
   import axios from 'axios'
 
   export default {
-    name: 'roster',
+    name: 'stats',
 
     components: {BTable, BTableColumn, Playerbio},
 
