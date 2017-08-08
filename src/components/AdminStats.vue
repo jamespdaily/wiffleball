@@ -11,15 +11,9 @@
               </template>
               <b-icon icon="arrow_drop_down"></b-icon>
             </button>
-
-            <b-dropdown-option value="All-time">
-              <h3>All-time</h3>
-            </b-dropdown-option>
-            <hr class="dropdown-divider">
             <b-dropdown-option v-for="year in years" :value="year" :key="year">
               <h3>{{ year }}</h3>
             </b-dropdown-option>
-
           </b-dropdown>
         </div>
         <div class="column">
@@ -56,14 +50,17 @@
         :checked-rows.sync="checkedRows">
 
           <template scope="props">
-            <b-table-column field="full_name" label="Name" sortable>
-              <a @click="openPlayerModal(props.row.id)">{{ props.row.full_name }}</a>
+            <b-table-column field="player.full_name" label="Name" sortable>
+              {{ props.row.player.full_name }}
+            </b-table-column>
+            <b-table-column field="season_year" label="Year" sortable numeric>
+              {{ props.row.season_year }}
             </b-table-column>
             <b-table-column field="games_played" label="G" sortable numeric>
               {{ props.row.games_played }}
             </b-table-column>
             <b-table-column field="average" label="AVG" sortable numeric>
-              {{ (props.row.average * 1).toFixed(3) }}
+              {{ (props.row.hits / props.row.at_bats).toFixed(3) }}
             </b-table-column>
             <b-table-column field="hits" label="H" sortable numeric>
               {{ props.row.hits }}
@@ -92,11 +89,16 @@
             <b-table-column field="strikeouts" label="SO" sortable numeric>
               {{ props.row.strikeouts }}
             </b-table-column>
+            <b-table-column field="edit" label="Edit" width="15">
+              <a @click="editPlayerStats('update', props.row.id)">
+                <b-icon icon="edit"></b-icon>
+              </a>
+            </b-table-column>
           </template>
       </b-table>
 
-      <b-modal :active.sync="showModal" has-modal-card>
-        <playerbio :selectedPlayerId="selectedPlayerId"></playerbio>
+      <b-modal :active.sync="showModal" has-modal-card :can-cancel="false">
+        <edit-stats :selectedPlayerStatsId="selectedPlayerStatsId" :type="editPlayerStatsType"></edit-stats>
       </b-modal>
 
     </div>
@@ -105,23 +107,23 @@
 </template>
 
 <script>
-  import eventBus from '../EventBus'
-  import Playerbio from './PlayerBio.vue'
   import BTableColumn from '../../node_modules/buefy/src/components/table/TableColumn.vue'
   import BTable from '../../node_modules/buefy/src/components/table/Table.vue'
   import axios from 'axios'
+  import EditStats from './EditStats.vue'
 
   export default {
-    name: 'stats',
+    name: 'admin-stats',
 
-    components: {BTable, BTableColumn, Playerbio},
+    components: {EditStats, BTable, BTableColumn},
 
     data () {
       return {
-        selectedSeason: 'All-time',
+        selectedSeason: '2017',
         years: [],
         playerStats: [],
-        selectedPlayerId: '',
+        selectedPlayerStatsId: '',
+        editPlayerStatsType: '',
 
         // Modal Settings
         showModal: false,
@@ -208,8 +210,9 @@
     },
 
     methods: {
-      openPlayerModal (playerId) {
-        this.selectedPlayerId = playerId
+      editPlayerStats (type, playerStatsId = null) {
+        this.editPlayerStatsType = type
+        this.selectedPlayerStatsId = playerStatsId
         this.showModal = true
       },
       updateSeasonDropdown () {
@@ -220,7 +223,7 @@
       },
       loadPlayerStats () {
         this.isLoading = true
-        axios.get('Player_Stats/getPlayerStats?year=' + this.selectedSeason + '&orderBy=full_name ASC')
+        axios.get('Player_Stats?filter[where][season_year]=' + this.selectedSeason + '&filter[include]=player')
           .then((response) => {
             Promise.resolve(response)
             this.playerStats = response.data
@@ -231,9 +234,8 @@
     },
 
     mounted () {
-      eventBus.$emit('setActiveNavTab', 'Stats')
       this.updateSeasonDropdown()
-      this.loadPlayerStats('All-time')
+      this.loadPlayerStats('2017')
     }
   }
 </script>

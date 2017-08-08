@@ -28,8 +28,8 @@
       return {
         navigationTabs: [
           {name: 'Home', path: 'Home', isActive: true},
-          {name: 'Stats', path: 'Stats', isActive: false},
-          {name: 'Scores', path: 'Scores', isActive: false},
+          {name: 'Players', path: 'Stats', isActive: false},
+          {name: 'Tournaments', path: 'Scores', isActive: false},
           {name: 'Admin', path: 'Admin', isActive: false}
         ]
       }

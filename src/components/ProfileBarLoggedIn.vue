@@ -7,7 +7,7 @@
             <a class="navbar-item" slot="trigger">
               <span>{{ user.displayName }}</span>
               <span><img :src="user.photoURL" width="32" height="38"></span>
-              <span><b-icon icon="arrow_drop_down"></b-icon></span>
+              <b-icon icon="arrow_drop_down"></b-icon>
             </a>
 
             <b-dropdown-option>Players</b-dropdown-option>
@@ -32,6 +32,7 @@ import BDropdownOption from '../../node_modules/buefy/src/components/dropdown/Dr
 
 export default {
   components: {BDropdownOption},
+
   name: 'profilebar',
 
   computed: {
@@ -42,6 +43,7 @@ export default {
 
   methods: {
     firebaseLogout () {
+      this.$router.go('/')
       firebase.auth().signOut()
     }
   }

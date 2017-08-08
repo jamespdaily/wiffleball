@@ -22,6 +22,10 @@
         Nulla vulputate elementum diam quis consectetur.
         Integer pulvinar laoreet nibh non faucibus.
       </b-tab-item>
+
+      <b-tab-item label="Game Stats">
+        <admin-stats></admin-stats>
+      </b-tab-item>
     </b-tabs>
 
     <router-view></router-view>
@@ -30,9 +34,14 @@
 
 <script>
   import PlayersAdmin from './AdminPlayers.vue'
+  import BTabItem from '../../node_modules/buefy/src/components/tabs/TabItem.vue'
+  import AdminStats from './AdminStats.vue'
 
   export default {
-    components: {PlayersAdmin},
+    components: {
+      AdminStats,
+      BTabItem,
+      PlayersAdmin},
     name: 'admin',
 
     data () {
