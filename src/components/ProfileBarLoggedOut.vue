@@ -1,14 +1,15 @@
 <template>
-  <nav class="navbar">
-    <div class="navbar-menu" id="loginDropDown">
-      <div class="navbar-end">
-        <b-dropdown position="is-bottom-left" hoverable>
-          <a class="navbar-item" slot="trigger">
-            <span>Login</span>
-            <b-icon icon="arrow_drop_down"></b-icon>
-          </a>
+  <div class="container">
+    <nav class="navbar">
+      <div class="navbar-menu" id="loginDropDown">
+        <div class="navbar-end">
+          <b-dropdown position="is-bottom-left" hoverable>
+            <a class="navbar-item" slot="trigger">
+              <span>Login</span>
+              <b-icon icon="arrow_drop_down"></b-icon>
+            </a>
 
-          <b-dropdown-item custom paddingless>
+            <b-dropdown-item custom paddingless>
               <div class="modal-card" style="width:300px;">
                 <section class="modal-card-head has-text-centered">
                   <p class="title is-5">Sign-in</p>
@@ -17,11 +18,12 @@
                   <div id="firebaseui-auth-container"></div>
                 </section>
               </div>
-          </b-dropdown-item>
-        </b-dropdown>
+            </b-dropdown-item>
+          </b-dropdown>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </template>
 
 <script>
