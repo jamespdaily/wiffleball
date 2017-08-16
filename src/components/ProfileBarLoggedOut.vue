@@ -1,12 +1,5 @@
 <template>
   <nav class="navbar">
-    <div class="navbar-brand">
-      <div class="navbar-burger burger" data-target="loginDropDown">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
     <div class="navbar-menu" id="loginDropDown">
       <div class="navbar-end">
         <b-dropdown position="is-bottom-left" hoverable>

@@ -76,6 +76,7 @@
                        placeholder="H"
                        type="number"
                        min="0"
+                       :max="atBats"
                        :disabled="isDisabled">
               </b-input>
               <p class="control">
