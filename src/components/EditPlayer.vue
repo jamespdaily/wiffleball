@@ -1,110 +1,124 @@
 <template>
-    <div class="modal-card">
-      <header class="modal-card-head">
-        <p class="modal-card-title">
-          <b-icon icon="edit" size="is-medium"></b-icon>
-          <span>{{ this.modalTitle }}</span>
-        </p>
-      </header>
-      <section class="modal-card-body">
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">
+        <b-icon icon="edit" size="is-medium"></b-icon>
+        <span>{{ modalTitle }}</span>
+      </p>
+    </header>
+    <section class="modal-card-body">
 
-        <b-field label="Full Name *">
-          <b-field>
-            <b-input expanded
-              v-model="full_name"
-              required>
-            </b-input>
-            <p class="control">
-              <button class="button is-danger is-outlined" @click="full_name = null">
-                <b-icon icon="clear"></b-icon>
-              </button>
-            </p>
-          </b-field>
-        </b-field>
-
-        <b-field label="First Name">
-          <b-field>
+      <b-field label="Full Name *">
+        <b-field type="is-primary">
           <b-input expanded
-            v-model="first_name"
-            placeholder="Enter First Name">
+                   v-model="full_name"
+                   placeholder="Enter full name"
+                   required>
+          </b-input>
+          <p class="control">
+            <button class="button is-danger is-outlined" @click="full_name = null">
+              <b-icon icon="clear"></b-icon>
+            </button>
+          </p>
+        </b-field>
+      </b-field>
+
+      <b-field label="First Name">
+        <b-field>
+          <b-input expanded
+                   v-model="first_name"
+                   placeholder="Enter First Name">
           </b-input>
           <p class="control">
             <button class="button is-danger is-outlined" @click="first_name = null">
               <b-icon icon="clear"></b-icon>
             </button>
           </p>
-          </b-field>
         </b-field>
+      </b-field>
 
-        <b-field label="Last Name">
-          <b-field>
+      <b-field label="Last Name">
+        <b-field>
           <b-input expanded
-            v-model="last_name"
-            placeholder="Enter Last Name">
+                   v-model="last_name"
+                   placeholder="Enter Last Name">
           </b-input>
           <p class="control">
             <button class="button is-danger is-outlined" @click="last_name = null">
               <b-icon icon="clear"></b-icon>
             </button>
           </p>
-          </b-field>
         </b-field>
+      </b-field>
 
-        <b-field label="Nickname">
-          <b-field>
+      <b-field label="Nickname">
+        <b-field>
           <b-input expanded
-            v-model="nickname"
-            placeholder="Enter Nickname">
+                   v-model="nickname"
+                   placeholder="Enter Nickname">
           </b-input>
           <p class="control">
             <button class="button is-danger is-outlined" @click="nickname = null">
               <b-icon icon="clear"></b-icon>
             </button>
           </p>
-          </b-field>
         </b-field>
+      </b-field>
 
-        <b-field label="Birthdate">
-          <b-field>
+      <b-field label="Birthdate">
+        <b-field>
           <b-input expanded
-            v-model="birth_date"
-            placeholder="Enter birthdate"
-            type="date">
+                   v-model="birth_date"
+                   placeholder="Enter birthdate"
+                   type="date">
           </b-input>
           <p class="control">
             <button class="button is-danger is-outlined" @click="birthdate = null">
               <b-icon icon="clear"></b-icon>
             </button>
           </p>
-          </b-field>
         </b-field>
+      </b-field>
 
-        <b-field label="Photo">
-          <b-field>
-          <b-input expanded
-            v-model="photo"
-            placeholder="Upload Photo">
-          </b-input>
-          <p class="control">
-            <button class="button is-danger is-outlined" @click="photo = null">
-              <b-icon icon="clear"></b-icon>
+      <b-field>
+        <b-upload v-model="dropFiles" drag-drop>
+          <section class="section">
+            <div class="content has-text-centered">
+              <p>
+                <b-icon
+                  icon="file_upload"
+                  size="is-large">
+                </b-icon>
+              </p>
+              <p>Drop your files here or click to upload</p>
+            </div>
+          </section>
+        </b-upload>
+      </b-field>
+      <div class="tags">
+        <span v-for="(file, index) in dropFiles"
+              :key="index"
+              class="tag is-primary" >
+            {{file.name}}
+            <button class="delete is-small"
+                    type="button"
+                    @click="deleteDropFile(index)">
             </button>
-          </p>
-          </b-field>
-        </b-field>
+        </span>
+      </div>
 
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button is-danger" @click="closePlayerModal()">
-          <b-icon icon="cancel"></b-icon>
-          <span>Close</span>
-        </button>
-        <button class="button is-success" @click="savePlayer()" :disabled="full_name === null">
-          <b-icon icon="save"></b-icon>
-          <span>Save</span>
-        </button>
-      </footer>
-    </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-danger" @click="closePlayerModal()">
+        <b-icon icon="cancel"></b-icon>
+        <span>Close</span>
+      </button>
+      <button class="button is-success" @click="savePlayer()" :disabled="full_name === null" :loading="isLoading">
+        <b-icon icon="save"></b-icon>
+        <span>Save</span>
+      </button>
+    </footer>
+  </div>
 </template>
 
 <script>
@@ -126,7 +140,10 @@
         birth_date: null,
         nickname: null,
         photo: null,
-        lastUpdated: null
+        lastUpdated: null,
+        isLoading: null,
+
+        dropFiles: []
       }
     },
 
@@ -159,6 +176,7 @@
           })
       },
       updatePlayer () {
+        this.isLoading = true
         this.axios.patch('Players/' + this.selectedPlayerId, {
           full_name: this.full_name,
           first_name: this.first_name,
@@ -169,6 +187,7 @@
         })
           .then(function (response) {
             console.log(response)
+            this.isLoading = false
           })
           .catch(function (error) {
             console.log(error)
@@ -201,6 +220,9 @@
       closePlayerModal () {
         eventBus.$emit('reloadPlayerData')
         this.$parent.close()
+      },
+      deleteDropFile (index) {
+        this.dropFiles.splice(index, 1)
       }
     },
 

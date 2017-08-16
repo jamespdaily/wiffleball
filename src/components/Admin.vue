@@ -4,31 +4,15 @@
       <b-tab-item label="Players">
         <players-admin></players-admin>
       </b-tab-item>
-
-      <b-tab-item label="Teams">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Pellentesque vestibulum dui vel molestie egestas.
-        Nulla vulputate elementum diam quis consectetur.
-        Integer pulvinar laoreet nibh non faucibus.
-        Suspendisse ut cursus lectus. Donec consectetur turpis at leo ultricies rhoncus.
-        Cras consequat aliquet eros nec porta.
-        Nullam sit amet mollis turpis.
-        Aenean vitae tortor et velit sodales faucibus.
-      </b-tab-item>
-
-      <b-tab-item label="Rosters">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Pellentesque vestibulum dui vel molestie egestas.
-        Nulla vulputate elementum diam quis consectetur.
-        Integer pulvinar laoreet nibh non faucibus.
-      </b-tab-item>
-
       <b-tab-item label="Game Stats">
         <admin-stats></admin-stats>
       </b-tab-item>
+      <b-tab-item label="News">
+        <edit-events></edit-events>
+      </b-tab-item>
     </b-tabs>
 
-    <router-view></router-view>
+
   </div>
 </template>
 
@@ -36,12 +20,10 @@
   import PlayersAdmin from './AdminPlayers.vue'
   import BTabItem from '../../node_modules/buefy/src/components/tabs/TabItem.vue'
   import AdminStats from './AdminStats.vue'
+  import EditEvents from './EditEvents.vue'
 
   export default {
-    components: {
-      AdminStats,
-      BTabItem,
-      PlayersAdmin},
+    components: {EditEvents, AdminStats, BTabItem, PlayersAdmin},
     name: 'admin',
 
     data () {

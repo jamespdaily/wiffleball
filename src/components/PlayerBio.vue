@@ -2,18 +2,18 @@
   <div class="card">
     <div class="card-content">
       <article class="media">
-      <figure class="media-left">
-        <p class="image is-128x128">
-          <img :src="players.photo">
-        </p>
-      </figure>
-      <div class="media-content">
-        <div class="content">
-          <p><strong>Name: </strong>{{ players.full_name }}</p>
-          <p><strong>Age: </strong></p>
-          <p><strong>Experience: </strong>{{ playerSeasonCount }} season</p>
+        <figure class="media-left">
+          <p class="image is-128x128">
+            <img :src="playerPhoto">
+          </p>
+        </figure>
+        <div class="media-content">
+          <div class="content">
+            <p><strong>Name: </strong>{{ playerName }}</p>
+            <p><strong>Age: </strong></p>
+            <p><strong>Experience: </strong>{{ playerSeasonCount }} season</p>
+          </div>
         </div>
-      </div>
       </article>
       <b-table
         :data="playerStats"
@@ -26,7 +26,7 @@
         :paginated="isPaginated"
         :per-page="perPage"
         :pagination-simple="isPaginationSimple"
-        default-sort="['season_year', 'desc']"
+        default-sort="season_year"
         :selected.sync="selected"
         :checked-rows.sync="checkedRows">
 
@@ -75,8 +75,6 @@
 </template>
 
 <script>
-  import eventBus from '../EventBus'
-
   export default {
     name: 'playerbio',
 
@@ -88,9 +86,11 @@
 
     data () {
       return {
-        playerStats: [],
-        players: [],
         showModal: false,
+        playerStats: [],
+        player: [],
+        playerName: '',
+        playerPhoto: '',
 
         // Table Settings
         columnHeaders: [
@@ -128,15 +128,17 @@
     },
 
     methods: {
-      updatePlayers () {
-        this.axios.get('Players/' + this.selectedPlayerId + '?filter[order]=season_year DESC')
+      fetchPlayers () {
+        this.axios.get('Players/' + this.selectedPlayerId)
           .then(response => {
-            this.players = response.data
+            this.playerName = response.data.full_name
+            this.playerPhoto = response.data.photo
+            this.player = response.data
           })
       },
 
-      updatePlayerStats () {
-        this.axios.get('Players/' + this.selectedPlayerId + '/playerStats?filter[order]=season_year DESC')
+      fetchPlayerStats () {
+        this.axios.get('Players/' + this.selectedPlayerId + '/playerStats')
           .then(response => {
             this.playerStats = response.data
           })
@@ -144,14 +146,10 @@
     },
 
     created () {
-      this.updatePlayerStats()
-      this.updatePlayers()
-
-      eventBus.$on('displayPlayerPopup', (playerId) => {
-        this.selectedPlayerId = playerId
-        this.showModal = true
-        return this.showModal
-      })
+      this.isLoading = true
+      this.fetchPlayerStats()
+      this.fetchPlayers()
+      this.isLoading = false
     }
   }
 </script>

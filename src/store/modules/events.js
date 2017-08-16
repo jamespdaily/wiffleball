@@ -1,12 +1,12 @@
 import * as types from '../mutation-types'
 
 const state = {
-  playerStats: []
+  events: []
 }
 
 const mutations = {
-  [types.FETCH_PLAYER_STATS] (state, playerStats) {
-    state.playerStats = playerStats
+  [types.FETCH_EVENTS] (state, events) {
+    state.events = events
   }
 }
 

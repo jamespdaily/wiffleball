@@ -15,7 +15,7 @@
             <b-icon icon="arrow_drop_down"></b-icon>
           </a>
 
-          <b-dropdown-option subheader paddingless>
+          <b-dropdown-item custom paddingless>
               <div class="modal-card" style="width:300px;">
                 <section class="modal-card-head has-text-centered">
                   <p class="title is-5">Sign-in</p>
@@ -24,7 +24,7 @@
                   <div id="firebaseui-auth-container"></div>
                 </section>
               </div>
-          </b-dropdown-option>
+          </b-dropdown-item>
         </b-dropdown>
       </div>
     </div>

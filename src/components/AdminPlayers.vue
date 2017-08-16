@@ -24,6 +24,9 @@
 
       <template scope="props">
         <b-table-column field="full_name" label="Name" sortable>
+          <a @click="popupPhoto(props.row.photo)">
+            <b-icon icon="photo"></b-icon>
+          </a>
           {{ props.row.full_name }}
         </b-table-column>
         <b-table-column field="first_name" label="First Name" sortable>
@@ -38,14 +41,8 @@
         <b-table-column field="birthdate" label="Birthdate" sortable>
           {{ props.row.birthdate }}
         </b-table-column>
-        <b-table-column field="last_updated" label="Last Updated" sortable>
-          {{ (props.row.updated_at) }}
-        </b-table-column>
-        <b-table-column field="photo" label="Photo" width="10">
-          <a @click="popupPhoto(props.row.photo)">
-            <b-icon icon="photo">
-            </b-icon>
-          </a>
+        <b-table-column field="last_updated" label="Last Updated">
+          {{ formatDate(props.row.updated_at) }}
         </b-table-column>
         <b-table-column field="edit" label="Edit" width="10">
           <a @click="editPlayer('updatePlayer', props.row.id)">
@@ -60,6 +57,8 @@
     <b-modal :active.sync="showModal" has-modal-card :canCancel=false>
       <edit-player :type="editPlayerType" :selectedPlayerId="selectedPlayerId"></edit-player>
     </b-modal>
+
+    <b-loading :active.sync="isLoading" :canCancel="true"></b-loading>
   </div>
 
 </template>
@@ -68,6 +67,7 @@
   import EditPlayer from './EditPlayer.vue'
   import BIcon from '../../node_modules/buefy/src/components/icon/Icon.vue'
   import eventBus from '../EventBus'
+  import moment from 'moment'
 
   export default {
     components: {BIcon, EditPlayer},
@@ -98,10 +98,6 @@
       }
     },
 
-    computed: {
-
-    },
-
     methods: {
       fetchPlayerData () {
         this.isLoading = true
@@ -120,6 +116,9 @@
         this.editPlayerType = type
         this.selectedPlayerId = playerId
         this.showModal = true
+      },
+      formatDate (date) {
+        return moment(date).format('YYYY-MM-DD HH:mm')
       }
     },
 

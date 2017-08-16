@@ -28,6 +28,24 @@
 
     <router-view></router-view>
 
+    <footer class="footer">
+      <div class="container has-text-centered">
+      <div class="columns is-centered">
+        <div class="column is-narrow">
+          <p>
+            <b-icon icon="payment"></b-icon>
+            <a href="https://paypal.me/JamesDaily" target="_blank">Donate</a>
+          </p>
+        </div>
+        <div class="column is-narrow">
+          <p>
+            <b-icon icon="email"></b-icon>
+            <a>Contact</a>
+          </p>
+        </div>
+      </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -36,9 +54,10 @@
   import ProfileBar from './components/ProfileBarLoggedIn'
   import ProfileBarLoggedOut from './components/ProfileBarLoggedOut'
   import { mapGetters } from 'vuex'
+  import BIcon from '../node_modules/buefy/src/components/icon/Icon.vue'
 
   export default {
-    components: { ProfileBarLoggedOut, Navigation, ProfileBar },
+    components: {BIcon, ProfileBarLoggedOut, Navigation, ProfileBar},
 
     name: 'app',
 
