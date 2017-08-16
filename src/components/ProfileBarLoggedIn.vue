@@ -2,9 +2,9 @@
   <div class="container">
     <nav class="navbar">
       <div class="container is-fluid">
-        <div class="navbar-menu">
+        <div class="navbar-menu is-active">
           <div class="navbar-end">
-            <b-dropdown position="is-bottom-left" hoverable>
+            <b-dropdown position="is-bottom-left">
               <a class="navbar-item" slot="trigger">
                 <img :src="user.photoURL" width="32" height="38">
                 <b-icon icon="arrow_drop_down"></b-icon>

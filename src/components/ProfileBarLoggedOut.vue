@@ -1,11 +1,10 @@
 <template>
-  <div class="container">
     <nav class="navbar">
-      <div class="navbar-menu" id="loginDropDown">
+      <div class="navbar-menu is-active">
         <div class="navbar-end">
-          <b-dropdown position="is-bottom-left" hoverable>
-            <a class="navbar-item" slot="trigger">
-              <span>Login</span>
+          <b-dropdown position="is-bottom-left">
+            <a class="navbar-item has-text-centered" slot="trigger">
+              Login
               <b-icon icon="arrow_drop_down"></b-icon>
             </a>
 
@@ -23,7 +22,6 @@
         </div>
       </div>
     </nav>
-  </div>
 </template>
 
 <script>
