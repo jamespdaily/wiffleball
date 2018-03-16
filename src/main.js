@@ -23,9 +23,6 @@ firebaseAuth.auth().onAuthStateChanged(user => store.commit('SET_USER', user))
 store.commit('SET_FIREBASE_APP', firebaseAuth)
 store.commit('SET_FIREBASE_UI', firebaseUi)
 
-store.dispatch('FETCH_PLAYERS')
-store.dispatch('FETCH_PLAYER_STATS')
-
 // Use the Vue Router
 Vue.use(VueRouter)
 

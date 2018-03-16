@@ -30,7 +30,7 @@
         :selected.sync="selected"
         :checked-rows.sync="checkedRows">
 
-        <template scope="props">
+        <template slot-scope="props">
           <b-table-column field="season_year" label="Year" sortable numeric>
             {{ props.row.season_year }}
           </b-table-column>
@@ -67,6 +67,28 @@
           <b-table-column field="strikeouts" label="SO" sortable numeric>
             {{ props.row.strikeouts }}
           </b-table-column>
+        </template>
+        <template slot="footer" v-if="!isCustom">
+          <div class="has-text-right">
+            Footer
+          </div>
+        </template>
+        <template slot="footer" v-else>
+          <th class="is-hidden-mobile" style="width:40px">
+            <div class="th-wrap is-numeric"> ID </div>
+          </th>
+          <th class="is-hidden-mobile">
+            <div class="th-wrap"> First Name </div>
+          </th>
+          <th class="is-hidden-mobile">
+            <div class="th-wrap"> Last Name </div>
+          </th>
+          <th class="is-hidden-mobile">
+            <div class="th-wrap is-centered"> Date </div>
+          </th>
+          <th class="is-hidden-mobile">
+            <div class="th-wrap"> Gender </div>
+          </th>
         </template>
       </b-table>
     </div>

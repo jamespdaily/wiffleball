@@ -28,7 +28,7 @@
       return {
         navigationTabs: [
           {name: 'Home', path: 'Home', isActive: true},
-          {name: 'Players', path: 'Stats', isActive: false},
+          {name: 'Stats', path: 'Stats', isActive: false},
           {name: 'Tournaments', path: 'Scores', isActive: false},
           {name: 'Admin', path: 'Admin', isActive: false}
         ]
@@ -49,7 +49,7 @@
       },
       isAuthorized (tabName) {
         if (tabName === 'Admin') {
-          return this.user !== null
+          return true // this.user !== null
         } else {
           return true
         }

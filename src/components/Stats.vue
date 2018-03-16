@@ -4,7 +4,7 @@
       <div class="columns">
         <div class="column">
           <b-field>
-            <b-select placeholder="Season" icon="date_range" v-model="selectedYear" @input="fetchAggregatePlayerStats">
+            <b-select placeholder="Season" icon="calendar" v-model="selectedYear" @input="fetchAggregatePlayerStats">
               <option value="All-time">All-Time</option>
               <option
                 v-for="year in years"
@@ -35,7 +35,7 @@
         :selected.sync="selected"
         :checked-rows.sync="checkedRows">
 
-        <template scope="props">
+        <template slot-scope="props">
           <b-table-column field="full_name" label="Name" sortable>
             <a @click="openPlayerModal(props.row.id)">{{ props.row.full_name }}</a>
           </b-table-column>
@@ -76,7 +76,7 @@
       </b-table>
 
       <b-modal :active.sync="showModal" has-modal-card>
-        <playerbio :selectedPlayerId="selectedPlayerId"></playerbio>
+        <playerbio :selectedPlayerId="selectedPlayerId"/>
       </b-modal>
 
     </div>
@@ -150,7 +150,6 @@
         for (let year = currentYear; year >= 2010; year--) {
           this.years.push(year)
         }
-        this.years.push(2018)
       },
       fetchAggregatePlayerStats () {
         this.isLoading = true

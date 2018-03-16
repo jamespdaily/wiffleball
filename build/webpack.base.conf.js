@@ -61,6 +61,15 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /npm\.js$/,
+        loader: 'string-replace-loader',
+        include: path.resolve('node_modules/firebaseui/dist'),
+        query: {
+          search: 'var require(\'firebase\');',
+          replace: 'var require(\'firebase/app\');require(\'firebase/auth\')',
+        }
       }
     ]
   }

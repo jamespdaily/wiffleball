@@ -1,8 +1,8 @@
 <template>
-  <div class="container">
+  <section class="section">
     <div class="field is-grouped is-grouped-right">
     <button class="button is-primary" type="button" @click="editPlayer('newPlayer')">
-      <b-icon icon="add"></b-icon>
+      <b-icon icon="library-plus"/>
       <span>Add Player</span>
     </button>
     </div>
@@ -12,20 +12,15 @@
       :bordered="isBordered"
       :striped="isStriped"
       :narrowed="isNarrowed"
-      :checkable="isCheckable"
       :loading="isLoading"
       :mobile-cards="hasMobileCards"
-      :paginated="isPaginated"
-      :per-page="perPage"
-      :pagination-simple="isPaginationSimple"
       default-sort="full_name"
-      :selected.sync="selected"
-      :checked-rows.sync="checkedRows">
+      :selected.sync="selected">
 
-      <template scope="props">
+      <template slot-scope="props">
         <b-table-column field="full_name" label="Name" sortable>
           <a @click="popupPhoto(props.row.photo)">
-            <b-icon icon="photo"></b-icon>
+            <b-icon icon="image"/>
           </a>
           {{ props.row.full_name }}
         </b-table-column>
@@ -39,14 +34,14 @@
           {{ props.row.nickname }}
         </b-table-column>
         <b-table-column field="birthdate" label="Birthdate" sortable>
-          {{ props.row.birthdate }}
+          {{ formatBirthDate(props.row.birth_date) }}
         </b-table-column>
         <b-table-column field="last_updated" label="Last Updated">
-          {{ formatDate(props.row.updated_at) }}
+          {{ formatUpdatedAtDate(props.row.updated_at) }}
         </b-table-column>
         <b-table-column field="edit" label="Edit" width="10">
           <a @click="editPlayer('updatePlayer', props.row.id)">
-            <b-icon icon="edit">
+            <b-icon icon="pencil">
             </b-icon>
           </a>
         </b-table-column>
@@ -55,11 +50,11 @@
     </b-table>
 
     <b-modal :active.sync="showModal" has-modal-card :canCancel=false>
-      <edit-player :type="editPlayerType" :selectedPlayerId="selectedPlayerId"></edit-player>
+      <edit-player :type="editPlayerType" :selectedPlayerId="selectedPlayerId"/>
     </b-modal>
 
     <b-loading :active.sync="isLoading" :canCancel="true"></b-loading>
-  </div>
+  </section>
 
 </template>
 
@@ -76,7 +71,10 @@
 
     data () {
       return {
+        // Player data
         players: [],
+
+        // App data
         selectedPlayerId: '',
         editPlayerType: '',
 
@@ -117,8 +115,11 @@
         this.selectedPlayerId = playerId
         this.showModal = true
       },
-      formatDate (date) {
+      formatUpdatedAtDate (date) {
         return moment(date).format('YYYY-MM-DD HH:mm')
+      },
+      formatBirthDate (birthDate) {
+        return birthDate === null ? null : moment(birthDate).format('YYYY-MM-DD')
       }
     },
 

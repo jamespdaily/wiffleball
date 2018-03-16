@@ -1,8 +1,8 @@
 <template>
   <div id="app">
 
-  <profile-bar v-if="user"></profile-bar>
-  <profile-bar-logged-out v-if="!user"></profile-bar-logged-out>
+    <profile-bar v-if="user"/>
+    <profile-bar-logged-out v-if="!user"/>
 
     <section class="hero is-primary is-bold">
       <div class="hero-body">
@@ -26,20 +26,20 @@
       </div>
     </section>
 
-    <router-view></router-view>
+    <router-view/>
 
     <footer class="footer">
       <div class="container has-text-centered">
       <div class="columns is-centered">
         <div class="column is-narrow">
           <p>
-            <b-icon icon="payment"></b-icon>
+            <b-icon icon="gift"/>
             <a href="https://paypal.me/JamesDaily" target="_blank">Donate</a>
           </p>
         </div>
         <div class="column is-narrow">
           <p>
-            <b-icon icon="email"></b-icon>
+            <b-icon icon="email"/>
             <a>Contact</a>
           </p>
         </div>

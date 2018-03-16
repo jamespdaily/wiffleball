@@ -2,7 +2,7 @@
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">
-        <b-icon icon="edit" size="is-medium"></b-icon>
+        <b-icon icon="account" size="is-medium"/>
         <span>{{ modalTitle }}</span>
       </p>
     </header>
@@ -17,7 +17,7 @@
           </b-input>
           <p class="control">
             <button class="button is-danger is-outlined" @click="full_name = null">
-              <b-icon icon="clear"></b-icon>
+              <b-icon icon="close"/>
             </button>
           </p>
         </b-field>
@@ -31,7 +31,7 @@
           </b-input>
           <p class="control">
             <button class="button is-danger is-outlined" @click="first_name = null">
-              <b-icon icon="clear"></b-icon>
+              <b-icon icon="close"/>
             </button>
           </p>
         </b-field>
@@ -45,7 +45,7 @@
           </b-input>
           <p class="control">
             <button class="button is-danger is-outlined" @click="last_name = null">
-              <b-icon icon="clear"></b-icon>
+              <b-icon icon="close"/>
             </button>
           </p>
         </b-field>
@@ -59,34 +59,43 @@
           </b-input>
           <p class="control">
             <button class="button is-danger is-outlined" @click="nickname = null">
-              <b-icon icon="clear"></b-icon>
+              <b-icon icon="close"/>
             </button>
           </p>
         </b-field>
       </b-field>
 
-      <b-field label="Birthdate">
-        <b-field>
-          <b-input expanded
-                   v-model="birth_date"
-                   placeholder="Enter birthdate"
-                   type="date">
-          </b-input>
-          <p class="control">
-            <button class="button is-danger is-outlined" @click="birthdate = null">
-              <b-icon icon="clear"></b-icon>
-            </button>
-          </p>
-        </b-field>
-      </b-field>
+      <div class="columns">
+        <div class="column">
+          <b-field label="Birthdate">
+            <b-field>
+              <b-datepicker v-model="birth_date"
+                            placeholder="Click to select..."
+                            icon="calendar">
+              </b-datepicker>
+              <p class="control">
+                <button class="button is-danger is-outlined" @click="birth_date = null">
+                  <b-icon icon="close"/>
+                </button>
+              </p>
+            </b-field>
+          </b-field>
+        </div>
+
+        <div class="column is-half">
+          <b-field label="Age">
+            <b-input v-model="age" disabled/>
+          </b-field>
+        </div>
+      </div>
 
       <b-field>
-        <b-upload v-model="dropFiles" drag-drop>
+        <b-upload v-model="dropFiles" drag-drop multiple="false">
           <section class="section">
             <div class="content has-text-centered">
               <p>
                 <b-icon
-                  icon="file_upload"
+                  icon="upload"
                   size="is-large">
                 </b-icon>
               </p>
@@ -98,7 +107,7 @@
       <div class="tags">
         <span v-for="(file, index) in dropFiles"
               :key="index"
-              class="tag is-primary" >
+              class="tag is-primary">
             {{file.name}}
             <button class="delete is-small"
                     type="button"
@@ -110,11 +119,11 @@
     </section>
     <footer class="modal-card-foot">
       <button class="button is-danger" @click="closePlayerModal()">
-        <b-icon icon="cancel"></b-icon>
+        <b-icon icon="cancel"/>
         <span>Close</span>
       </button>
       <button class="button is-success" @click="savePlayer()" :disabled="full_name === null" :loading="isLoading">
-        <b-icon icon="save"></b-icon>
+        <b-icon icon="check"/>
         <span>Save</span>
       </button>
     </footer>
@@ -159,6 +168,10 @@
         } else {
           return 'Edit Player'
         }
+      },
+      age () {
+        let now = new Date()
+        return this.birth_date !== null ? this.diff_years(this.birth_date, now) : null
       }
     },
 
@@ -216,6 +229,11 @@
           this.updatePlayer()
         }
         this.$snackbar.open(this.full_name + ' has been saved')
+      },
+      diff_years (dt2, dt1) {
+        let diff = (dt2.getTime() - dt1.getTime()) / 1000
+        diff /= (60 * 60 * 24)
+        return Math.abs(Math.round(diff / 365.25))
       },
       closePlayerModal () {
         eventBus.$emit('reloadPlayerData')

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <section class="section">
     <b-field label="Title" expanded>
       <b-input placeholder="Enter a Title" v-model="eventTitle"></b-input>
     </b-field>
@@ -12,11 +12,11 @@
       <span>Clear</span>
     </button>
     <button class="button is-success" @click="saveEvent()" :disabled="isDisabled" :loading="isLoading">
-      <b-icon icon="save"></b-icon>
+      <b-icon icon="check"></b-icon>
       <span>Save</span>
     </button>
     <br><br>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -56,7 +56,7 @@
         this.axios.post('Events/', {
           event_title: this.eventTitle,
           event_text: this.eventMessage,
-          event_author: this.user.displayName
+          event_author: 'dilly dilly' // this.user.displayName
         })
           .then(function (response) {
             console.log(response)

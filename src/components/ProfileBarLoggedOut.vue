@@ -61,5 +61,5 @@
 </script>
 
 <style scoped>
-  @import url('../../node_modules/firebaseui/dist/firebaseui.css');
+  @import url('/node_modules/firebaseui/dist/firebaseui.css');
 </style>

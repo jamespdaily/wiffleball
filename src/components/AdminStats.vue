@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <section class="section">
 
-    <b-field grouped>
+    <div class="field is-grouped is-grouped-right">
       <b-field>
-        <b-select placeholder="Season" icon="date_range" v-model="selectedSeason" @input="loadPlayerStats">
+        <b-select placeholder="Season" icon="calendar" v-model="selectedSeason" @input="loadPlayerStats">
           <option
             v-for="year in years"
             :value="year"
@@ -16,29 +16,26 @@
       <b-field>
         <p class="control">
           <button class="button is-primary" @click="editPlayerStats('create', null)">
-            <b-icon icon="add"></b-icon>
+            <b-icon icon="library-plus"></b-icon>
             <span>Add Stats</span>
           </button>
         </p>
       </b-field>
-    </b-field>
+    </div>
 
     <b-table
       :data="playerStats"
-      :bordered="isBordered"
       :striped="isStriped"
       :narrowed="isNarrowed"
-      :checkable="isCheckable"
       :loading="isLoading"
       :mobile-cards="hasMobileCards"
-      :paginated="isPaginated"
-      :per-page="perPage"
       :pagination-simple="isPaginationSimple"
       default-sort="player.full_name"
+      :default-sort-direction="defaultSortDirection"
       :selected.sync="selected"
       :checked-rows.sync="checkedRows">
 
-      <template scope="props">
+      <template slot-scope="props">
         <b-table-column field="player.full_name" label="Name" sortable>
           {{ props.row.player.full_name }}
         </b-table-column>
@@ -80,17 +77,17 @@
         </b-table-column>
         <b-table-column field="edit" label="Edit" width="15">
           <a @click="editPlayerStats('update', props.row.id)">
-            <b-icon icon="edit"></b-icon>
+            <b-icon icon="pencil"></b-icon>
           </a>
         </b-table-column>
       </template>
     </b-table>
 
     <b-modal :active.sync="showModal" has-modal-card :can-cancel="false">
-      <edit-stats :selectedPlayerStatsId="selectedPlayerStatsId" :type="editPlayerStatsType"></edit-stats>
+      <edit-stats :selectedPlayerStatsId="selectedPlayerStatsId" :type="editPlayerStatsType"/>
     </b-modal>
 
-  </div>
+  </section>
 
 </template>
 
@@ -148,6 +145,7 @@
         hasMobileCards: true,
         isPaginated: false,
         isPaginationSimple: true,
+        defaultSortDirection: 'asc',
         perPage: 50
       }
     },
@@ -163,7 +161,6 @@
         for (let year = currentYear; year >= 2010; year--) {
           this.years.push(year)
         }
-        this.years.push(2018)
         this.selectedSeason = currentYear
       },
       loadPlayerStats () {

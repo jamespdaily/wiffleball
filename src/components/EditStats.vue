@@ -3,7 +3,7 @@
     <header class="modal-card-head">
       <b-field grouped position="is-centered">
         <b-field label="Player Name" type="is-primary">
-          <b-select required placeholder="Select Player" icon="person"
+          <b-select required placeholder="Select Player" icon="account"
                     v-model="playerId"
                     :disabled="this.type === 'update'" @type="search">
             <option v-for="player in players"
@@ -15,7 +15,7 @@
         </b-field>
 
         <b-field label="Year" type="is-primary">
-          <b-select placeholder="Select Year" icon="date_range" v-model="year" required
+          <b-select placeholder="Select Year" icon="calendar" v-model="year" required
                     :disabled="this.type === 'update'">
             <option
               v-for="year in years"
@@ -42,7 +42,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="gamesPlayed = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="clear"/>
                 </button>
               </p>
             </b-field>
@@ -61,7 +61,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="atBats = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -81,7 +81,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="hits = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -116,7 +116,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="runs = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -135,7 +135,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="rbi = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -154,7 +154,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="doubles = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -173,7 +173,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="triples = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -194,7 +194,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="homeruns = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -213,7 +213,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="baseOnBalls = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -232,7 +232,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined" @click="strikeouts = null">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -249,7 +249,7 @@
               </b-input>
               <p class="control">
                 <button class="button is-danger is-outlined">
-                  <b-icon icon="clear"></b-icon>
+                  <b-icon icon="close"/>
                 </button>
               </p>
             </b-field>
@@ -260,11 +260,11 @@
     </section>
     <footer class="modal-card-foot">
       <button class="button is-danger" @click="closePlayerStatsModal()">
-        <b-icon icon="cancel"></b-icon>
+        <b-icon icon="cancel"/>
         <span>Close</span>
       </button>
       <button class="button is-success" @click="savePlayerStats()" :disabled="isDisabled" :is-loading="isLoading">
-        <b-icon icon="save"></b-icon>
+        <b-icon icon="check"/>
         <span>Save</span>
       </button>
     </footer>
